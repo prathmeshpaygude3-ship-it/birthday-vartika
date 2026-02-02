@@ -14,6 +14,7 @@ body {
     text-align: center;
 }
 
+/* TITLE */
 h1 {
     margin-top: 20px;
     font-size: 2.8rem;
@@ -32,6 +33,7 @@ p {
     margin: 10px 20px;
 }
 
+/* BALLOONS */
 .balloon {
     position: fixed;
     bottom: -100px;
@@ -50,11 +52,13 @@ p {
     left: 50%;
     top: 70px;
 }
+
 @keyframes floatUp {
     from { transform: translateY(0); }
     to { transform: translateY(-120vh); }
 }
 
+/* PHOTO SLIDER */
 .slider {
     width: 90%;
     max-width: 320px;
@@ -71,6 +75,7 @@ p {
     display: block;
 }
 
+/* MESSAGE NOTE — 6 SECONDS */
 .note {
     position: fixed;
     top: 50%;
@@ -82,9 +87,11 @@ p {
     font-size: 1.1rem;
     color: #6a1b9a;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: notePop 2s ease forwards;
+    animation: notePop 6s ease forwards;
     z-index: 999;
+    text-align: center;
 }
+
 @keyframes notePop {
     0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
     20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -92,6 +99,7 @@ p {
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
 }
 
+/* FIREWORKS */
 canvas {
     position: fixed;
     top: 0;
@@ -99,6 +107,7 @@ canvas {
     pointer-events: none;
 }
 
+/* BUTTON */
 button {
     padding: 15px 28px;
     border-radius: 30px;
@@ -141,7 +150,7 @@ button {
 <button onclick="startFireworks()">🎆 A Small Surprise 🎆</button>
 
 <script>
-/* 💌 NOTES — UNCHANGED */
+/* 💌 YOUR MESSAGES — UNTOUCHED */
 const gratitudeNotes = [
     "🤍",
     "Happyyy 788,918,400 Seconds on this planet u cutiee 🌻",
@@ -154,13 +163,13 @@ const gratitudeNotes = [
     "LOVE YOU DUFFFFFFFEEERRRRRRR 🤍🤍🤍 "
 ];
 
-/* 🎈 BALLOONS */
+/* 🎈 BALLOONS — SLOW & SMOOTH */
 function createBalloon() {
     const balloon = document.createElement("div");
     balloon.className = "balloon";
     balloon.style.left = Math.random() * 100 + "vw";
     balloon.style.background = `hsl(${Math.random()*360},100%,70%)`;
-    balloon.style.animationDuration = (Math.random()*4 + 6) + "s";
+    balloon.style.animationDuration = (Math.random()*6 + 10) + "s";
 
     balloon.onclick = () => {
         balloon.remove();
@@ -168,17 +177,17 @@ function createBalloon() {
     };
 
     document.body.appendChild(balloon);
-    setTimeout(() => balloon.remove(), 12000);
+    setTimeout(() => balloon.remove(), 16000);
 }
-setInterval(createBalloon, 800);
+setInterval(createBalloon, 1500);
 
-/* 💌 NOTE DISPLAY */
+/* 💌 MESSAGE DISPLAY — 6s */
 function showGratitudeNote() {
     const note = document.createElement("div");
     note.className = "note";
     note.textContent = gratitudeNotes[Math.floor(Math.random() * gratitudeNotes.length)];
     document.body.appendChild(note);
-    setTimeout(() => note.remove(), 2000);
+    setTimeout(() => note.remove(), 6200);
 }
 
 /* 📸 SLIDER */
@@ -190,7 +199,7 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 3000);
 
-/* 🎆 FIXED FIREWORKS */
+/* 🎆 FIREWORKS — FIXED */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
