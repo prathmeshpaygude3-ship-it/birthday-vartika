@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🎀 Happy Birthday Vartiiikkkkaaaaaa 🎀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    overflow-x: hidden;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 2.8rem;
+    color: #ff4081;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+p {
+    color: #6a1b9a;
+    font-size: 1.2rem;
+    margin: 10px 20px;
+}
+
+.balloon {
+    position: fixed;
+    bottom: -100px;
+    width: 50px;
+    height: 70px;
+    border-radius: 50%;
+    cursor: pointer;
+    animation: floatUp linear infinite;
+}
+.balloon::after {
+    content: '';
+    width: 2px;
+    height: 30px;
+    background: #555;
+    position: absolute;
+    left: 50%;
+    top: 70px;
+}
+@keyframes floatUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120vh); }
+}
+
+.slider {
+    width: 90%;
+    max-width: 320px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.slider img {
+    width: 100%;
+    display: none;
+}
+.slider img.active {
+    display: block;
+}
+
+.note {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(255,255,255,0.95);
+    padding: 18px 24px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    color: #6a1b9a;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: notePop 2s ease forwards;
+    z-index: 999;
+}
+@keyframes notePop {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+button {
+    padding: 15px 28px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    background: #ff4081;
+    color: white;
+    cursor: pointer;
+    margin: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<h1>🎂 Happy Birthday Dufferrr🎉</h1>
+
+<button id="musicBtn">▶ Play Music</button>
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<p>You make life lighter just by being around 🤍</p>
+
+<div class="slider">
+    <img src="photos/1.jpg" class="active">
+    <img src="photos/2.jpg">
+    <img src="photos/3.jpg">
+    <img src="photos/4.jpg">
+    <img src="photos/5.jpg">
+    <img src="photos/6.jpg">
+    <img src="photos/7.jpg">
+    <img src="photos/8.jpg">
+</div>
+
+<p>📸 Little moments that matter</p>
+
+<button onclick="startFireworks()">🎆 A Small Surprise 🎆</button>
+
+<script>
+/* 💌 NOTES — UNCHANGED */
+const gratitudeNotes = [
+    "🤍",
+    "Happyyy 788,918,400 Seconds on this planet u cutiee 🌻",
+    "Mera Sir khaana kbb band karegiii dumbooo ? 💫",
+    "I’m glad ki Amity mai Admission lene ka kuch to faayda hua hai mera 🌈",
+    "Tu janti hai na ki U R MY LUCKYYY CHARMMM, so kbhi sochiyo bhi matt baat band karne ka , warna pit jayegi 🤍",
+    "i just got to know ki tu emotional bhi hoo sakti hai , i mean wo din kbb ayega jab u will express ur emotions to me? i'll be waiting for that day 🤍 ",
+    "Mera sunna kabse chalu karegi meri pyaadi bhonduuu (pyaadi was personal)🌸",
+    "Tu mere liye shayad jitna sochti ho, usse zyada imp hai 🤍🌸",
+    "LOVE YOU DUFFFFFFFEEERRRRRRR 🤍🤍🤍 "
+];
+
+/* 🎈 BALLOONS */
+function createBalloon() {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.left = Math.random() * 100 + "vw";
+    balloon.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    balloon.style.animationDuration = (Math.random()*4 + 6) + "s";
+
+    balloon.onclick = () => {
+        balloon.remove();
+        showGratitudeNote();
+    };
+
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 12000);
+}
+setInterval(createBalloon, 800);
+
+/* 💌 NOTE DISPLAY */
+function showGratitudeNote() {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.textContent = gratitudeNotes[Math.floor(Math.random() * gratitudeNotes.length)];
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 2000);
+}
+
+/* 📸 SLIDER */
+let index = 0;
+const slides = document.querySelectorAll(".slider img");
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}, 3000);
+
+/* 🎆 FIXED FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function startFireworks() {
+    let frames = 0;
+    function animate() {
+        frames++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < 100; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = frames * 5;
+            ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
+            ctx.fillRect(
+                canvas.width/2 + Math.cos(angle) * radius,
+                canvas.height/2 + Math.sin(angle) * radius,
+                3, 3
+            );
+        }
+
+        if (frames < 25) requestAnimationFrame(animate);
+        else ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+    animate();
+}
+
+/* 🎶 MUSIC */
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+let isPlaying = false;
+
+musicBtn.onclick = () => {
+    if (!isPlaying) {
+        music.play();
+        musicBtn.textContent = "⏸ Pause Music";
+    } else {
+        music.pause();
+        musicBtn.textContent = "▶ Play Music";
+    }
+    isPlaying = !isPlaying;
+};
+</script>
+
+</body>
+</html>
