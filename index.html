@@ -52,13 +52,12 @@ p {
     left: 50%;
     top: 70px;
 }
-
 @keyframes floatUp {
     from { transform: translateY(0); }
     to { transform: translateY(-120vh); }
 }
 
-/* PHOTO SLIDER */
+/* SLIDER */
 .slider {
     width: 90%;
     max-width: 320px;
@@ -75,12 +74,12 @@ p {
     display: block;
 }
 
-/* MESSAGE NOTE — VERY SLOW (10s) */
+/* MESSAGE NOTE */
 .note {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%);
     background: rgba(255,255,255,0.95);
     padding: 18px 24px;
     border-radius: 20px;
@@ -89,14 +88,58 @@ p {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     animation: notePop 10s ease forwards;
     z-index: 999;
-    text-align: center;
 }
-
 @keyframes notePop {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
     20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     80% { opacity: 1; }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* CAKE */
+#cake-section {
+    margin-top: 40px;
+}
+.cake {
+    position: relative;
+    width: 220px;
+    margin: 30px auto;
+}
+.cake-base {
+    height: 80px;
+    background: #ff8fab;
+    border-radius: 15px;
+}
+.candle {
+    position: absolute;
+    top: -35px;
+    width: 10px;
+    height: 35px;
+    background: white;
+    cursor: pointer;
+}
+.candle:nth-child(1) { left: 70px; }
+.candle:nth-child(2) { left: 110px; }
+.candle:nth-child(3) { left: 150px; }
+
+.flame {
+    width: 14px;
+    height: 14px;
+    background: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: -14px;
+    left: -2px;
+    animation: flicker 0.4s infinite alternate;
+}
+@keyframes flicker {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+#cutCakeBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* FIREWORKS */
@@ -125,7 +168,7 @@ button {
 
 <canvas id="fireworks"></canvas>
 
-<h1>🎂 Happy Birthday Dufferrr🎉</h1>
+<h1>🎂 Happy Birthday Dufferrr 🎉</h1>
 
 <button id="musicBtn">▶ Play Music</button>
 <audio id="bgMusic" loop>
@@ -147,12 +190,24 @@ button {
 
 <p>📸 Little moments that matter</p>
 
-<button onclick="startFireworks()">🎆 A Small Surprise 🎆</button>
+<!-- CAKE -->
+<div id="cake-section">
+    <p>🕯️ Make a wish and blow the candles</p>
+
+    <div class="cake">
+        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        <div class="cake-base"></div>
+    </div>
+
+    <button id="cutCakeBtn" disabled onclick="cutCake()">🔪 Cut the Cake</button>
+</div>
 
 <script>
-/* 💌 YOUR MESSAGES — UNTOUCHED */
+/* 💌 MESSAGES — UNCHANGED */
 const gratitudeNotes = [
-    "🤍",
+    "Agar aaj cllg mai ni ruki tere bday wale din to tu gyyii 🤍",
     "Happyyy 788,918,400 Seconds on this planet u cutiee 🌻",
     "Mera Sir khaana kbb band karegiii dumbooo ? 💫",
     "I’m glad ki Amity mai Admission lene ka kuch to faayda hua hai mera 🌈",
@@ -163,7 +218,7 @@ const gratitudeNotes = [
     "LOVE YOU DUFFFFFFFEEERRRRRRR 🤍🤍🤍 "
 ];
 
-/* 🎈 BALLOONS — ULTRA SLOW */
+/* BALLOONS — VERY SLOW */
 function createBalloon() {
     const balloon = document.createElement("div");
     balloon.className = "balloon";
@@ -173,7 +228,7 @@ function createBalloon() {
 
     balloon.onclick = () => {
         balloon.remove();
-        showGratitudeNote();
+        showNote();
     };
 
     document.body.appendChild(balloon);
@@ -181,8 +236,8 @@ function createBalloon() {
 }
 setInterval(createBalloon, 3000);
 
-/* 💌 MESSAGE DISPLAY — 10s */
-function showGratitudeNote() {
+/* MESSAGE */
+function showNote() {
     const note = document.createElement("div");
     note.className = "note";
     note.textContent = gratitudeNotes[Math.floor(Math.random() * gratitudeNotes.length)];
@@ -190,7 +245,7 @@ function showGratitudeNote() {
     setTimeout(() => note.remove(), 10500);
 }
 
-/* 📸 SLIDER */
+/* SLIDER */
 let index = 0;
 const slides = document.querySelectorAll(".slider img");
 setInterval(() => {
@@ -199,7 +254,20 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 4000);
 
-/* 🎆 FIREWORKS — FIXED */
+/* CAKE */
+function blowCandle(candle) {
+    const flame = candle.querySelector(".flame");
+    if (flame) flame.remove();
+    if (document.querySelectorAll(".flame").length === 0) {
+        document.getElementById("cutCakeBtn").disabled = false;
+    }
+}
+function cutCake() {
+    document.querySelector(".cake-base").style.transform = "scale(0.95)";
+    startFireworks();
+}
+
+/* FIREWORKS */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -210,7 +278,6 @@ function startFireworks() {
     function animate() {
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         for (let i = 0; i < 100; i++) {
             const angle = Math.random() * Math.PI * 2;
             const radius = frames * 5;
@@ -221,18 +288,15 @@ function startFireworks() {
                 3, 3
             );
         }
-
         if (frames < 25) requestAnimationFrame(animate);
-        else ctx.clearRect(0,0,canvas.width,canvas.height);
     }
     animate();
 }
 
-/* 🎶 MUSIC */
+/* MUSIC */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 let isPlaying = false;
-
 musicBtn.onclick = () => {
     if (!isPlaying) {
         music.play();
