@@ -75,7 +75,7 @@ p {
     display: block;
 }
 
-/* MESSAGE NOTE — 6 SECONDS */
+/* MESSAGE NOTE — VERY SLOW (10s) */
 .note {
     position: fixed;
     top: 50%;
@@ -87,7 +87,7 @@ p {
     font-size: 1.1rem;
     color: #6a1b9a;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: notePop 6s ease forwards;
+    animation: notePop 10s ease forwards;
     z-index: 999;
     text-align: center;
 }
@@ -163,13 +163,13 @@ const gratitudeNotes = [
     "LOVE YOU DUFFFFFFFEEERRRRRRR 🤍🤍🤍 "
 ];
 
-/* 🎈 BALLOONS — SLOW & SMOOTH */
+/* 🎈 BALLOONS — ULTRA SLOW */
 function createBalloon() {
     const balloon = document.createElement("div");
     balloon.className = "balloon";
     balloon.style.left = Math.random() * 100 + "vw";
     balloon.style.background = `hsl(${Math.random()*360},100%,70%)`;
-    balloon.style.animationDuration = (Math.random()*6 + 10) + "s";
+    balloon.style.animationDuration = (Math.random()*10 + 22) + "s";
 
     balloon.onclick = () => {
         balloon.remove();
@@ -177,17 +177,17 @@ function createBalloon() {
     };
 
     document.body.appendChild(balloon);
-    setTimeout(() => balloon.remove(), 16000);
+    setTimeout(() => balloon.remove(), 32000);
 }
-setInterval(createBalloon, 1500);
+setInterval(createBalloon, 3000);
 
-/* 💌 MESSAGE DISPLAY — 6s */
+/* 💌 MESSAGE DISPLAY — 10s */
 function showGratitudeNote() {
     const note = document.createElement("div");
     note.className = "note";
     note.textContent = gratitudeNotes[Math.floor(Math.random() * gratitudeNotes.length)];
     document.body.appendChild(note);
-    setTimeout(() => note.remove(), 6200);
+    setTimeout(() => note.remove(), 10500);
 }
 
 /* 📸 SLIDER */
@@ -197,7 +197,7 @@ setInterval(() => {
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
-}, 3000);
+}, 4000);
 
 /* 🎆 FIREWORKS — FIXED */
 const canvas = document.getElementById("fireworks");
