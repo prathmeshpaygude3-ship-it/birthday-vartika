@@ -33,7 +33,7 @@ p {
     margin: 10px 20px;
 }
 
-/* BALLOONS */
+/* 🎈 BALLOONS */
 .balloon {
     position: fixed;
     bottom: -100px;
@@ -42,6 +42,7 @@ p {
     border-radius: 50%;
     cursor: pointer;
     animation: floatUp linear infinite;
+    z-index: 1;
 }
 .balloon::after {
     content: '';
@@ -57,7 +58,7 @@ p {
     to { transform: translateY(-120vh); }
 }
 
-/* SLIDER */
+/* 📸 SLIDER */
 .slider {
     width: 90%;
     max-width: 320px;
@@ -74,7 +75,7 @@ p {
     display: block;
 }
 
-/* MESSAGE NOTE */
+/* 💌 MESSAGE */
 .note {
     position: fixed;
     top: 50%;
@@ -96,31 +97,40 @@ p {
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
 }
 
-/* CAKE */
+/* 🎂 CAKE */
 #cake-section {
     margin-top: 40px;
 }
+
 .cake {
     position: relative;
-    width: 220px;
+    width: 240px;
     margin: 30px auto;
 }
+
 .cake-base {
-    height: 80px;
+    height: 90px;
     background: #ff8fab;
-    border-radius: 15px;
+    border-radius: 18px;
+    position: relative;
+    z-index: 1;
 }
+
+/* 🕯️ CANDLES */
 .candle {
     position: absolute;
-    top: -35px;
-    width: 10px;
-    height: 35px;
+    top: -45px;
+    width: 12px;
+    height: 40px;
     background: white;
+    border-radius: 4px;
     cursor: pointer;
+    z-index: 5;
 }
-.candle:nth-child(1) { left: 70px; }
-.candle:nth-child(2) { left: 110px; }
-.candle:nth-child(3) { left: 150px; }
+
+.candle1 { left: 70px; }
+.candle2 { left: 115px; }
+.candle3 { left: 160px; }
 
 .flame {
     width: 14px;
@@ -129,12 +139,12 @@ p {
     border-radius: 50%;
     position: absolute;
     top: -14px;
-    left: -2px;
+    left: -1px;
     animation: flicker 0.4s infinite alternate;
 }
 @keyframes flicker {
     from { transform: scale(1); }
-    to { transform: scale(1.2); }
+    to { transform: scale(1.25); }
 }
 
 #cutCakeBtn:disabled {
@@ -142,12 +152,13 @@ p {
     cursor: not-allowed;
 }
 
-/* FIREWORKS */
+/* 🎆 FIREWORKS */
 canvas {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
+    z-index: 10;
 }
 
 /* BUTTON */
@@ -190,14 +201,21 @@ button {
 
 <p>📸 Little moments that matter</p>
 
-<!-- CAKE -->
+<!-- 🎂 CAKE SECTION -->
 <div id="cake-section">
     <p>🕯️ Make a wish and blow the candles</p>
 
     <div class="cake">
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        <div class="candle candle1" onclick="blowCandle(this)">
+            <div class="flame"></div>
+        </div>
+        <div class="candle candle2" onclick="blowCandle(this)">
+            <div class="flame"></div>
+        </div>
+        <div class="candle candle3" onclick="blowCandle(this)">
+            <div class="flame"></div>
+        </div>
+
         <div class="cake-base"></div>
     </div>
 
@@ -207,7 +225,7 @@ button {
 <script>
 /* 💌 MESSAGES — UNCHANGED */
 const gratitudeNotes = [
-    "Agar aaj cllg mai ni ruki tere bday wale din to tu gyyii 🤍",
+    "Agar aaj tere bday wale din tu ruki nhi , to fir baat na kariyo mujhse haa🤍",
     "Happyyy 788,918,400 Seconds on this planet u cutiee 🌻",
     "Mera Sir khaana kbb band karegiii dumbooo ? 💫",
     "I’m glad ki Amity mai Admission lene ka kuch to faayda hua hai mera 🌈",
@@ -218,7 +236,7 @@ const gratitudeNotes = [
     "LOVE YOU DUFFFFFFFEEERRRRRRR 🤍🤍🤍 "
 ];
 
-/* BALLOONS — VERY SLOW */
+/* 🎈 BALLOONS — ULTRA SLOW */
 function createBalloon() {
     const balloon = document.createElement("div");
     balloon.className = "balloon";
@@ -236,7 +254,7 @@ function createBalloon() {
 }
 setInterval(createBalloon, 3000);
 
-/* MESSAGE */
+/* 💌 MESSAGE */
 function showNote() {
     const note = document.createElement("div");
     note.className = "note";
@@ -245,7 +263,7 @@ function showNote() {
     setTimeout(() => note.remove(), 10500);
 }
 
-/* SLIDER */
+/* 📸 SLIDER */
 let index = 0;
 const slides = document.querySelectorAll(".slider img");
 setInterval(() => {
@@ -254,7 +272,7 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 4000);
 
-/* CAKE */
+/* 🕯️ CANDLES */
 function blowCandle(candle) {
     const flame = candle.querySelector(".flame");
     if (flame) flame.remove();
@@ -262,12 +280,14 @@ function blowCandle(candle) {
         document.getElementById("cutCakeBtn").disabled = false;
     }
 }
+
+/* 🎂 CUT CAKE */
 function cutCake() {
     document.querySelector(".cake-base").style.transform = "scale(0.95)";
     startFireworks();
 }
 
-/* FIREWORKS */
+/* 🎆 FIREWORKS */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -293,7 +313,7 @@ function startFireworks() {
     animate();
 }
 
-/* MUSIC */
+/* 🎶 MUSIC */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 let isPlaying = false;
